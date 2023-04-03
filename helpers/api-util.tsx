@@ -8,11 +8,15 @@ export const getAllEvents = async () => {
     for (const key in allEvents) {
         transformedData.push({ id: key, ...allEvents[key] });
     }
-    console.log(transformedData);
     return transformedData;
 };
 
 export async function getFeaturedEvents() {
     const allEvents = await getAllEvents();
     return allEvents.filter((event) => event.isFeatured);
+}
+
+export async function getEventById(id) {
+    const allEvents = await getAllEvents();
+    return allEvents.find((event) => event.id === id);
 }

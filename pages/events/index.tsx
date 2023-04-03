@@ -28,6 +28,7 @@ export const getStaticProps = async () => {
         props: {
             allEvents,
         },
+        revalidate: 1800,
     };
 };
 export default EventPage;
