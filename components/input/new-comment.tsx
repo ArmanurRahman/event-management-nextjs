@@ -58,7 +58,7 @@ function NewComment(props) {
             {isInvalid && (
                 <p>Please enter a valid email address and comment!</p>
             )}
-            <button>Submit</button>
+            <button onClick={sendCommentHandler}>Submit</button>
         </form>
     );
 }

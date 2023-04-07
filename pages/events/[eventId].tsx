@@ -11,7 +11,7 @@ import Comments from "@/components/input/comments";
 
 function EventDetailPage(props) {
     const { selectedEvent } = props;
-    console.log(selectedEvent);
+    // console.log(selectedEvent);
     // const router = useRouter();
 
     // const eventId = router.query.eventId;
@@ -50,7 +50,7 @@ export const getStaticProps = async (context) => {
             notFound: true,
         };
     }
-    console.log(selectedEvent);
+    // console.log(selectedEvent);
     return {
         props: {
             selectedEvent: selectedEvent,
