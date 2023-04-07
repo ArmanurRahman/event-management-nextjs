@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import CommentList from "./comment-list";
 import NewComment from "./new-comment";
 import classes from "./comments.module.css";
+import NotificationContext from "@/store/notification-context";
 
 function Comments(props) {
     const { eventId } = props;
@@ -12,11 +13,16 @@ function Comments(props) {
     function toggleCommentsHandler() {
         setShowComments((prevStatus) => !prevStatus);
     }
-
+    const notificationCtx = useContext(NotificationContext);
     function addCommentHandler(commentData) {
         // send data to API
         const apiPath = `/api/comments/${eventId}`;
 
+        notificationCtx.showNotification({
+            title: "Posting",
+            message: "Posting comment",
+            status: "pending",
+        });
         fetch(apiPath, {
             method: "POST",
             headers: {
@@ -24,9 +30,27 @@ function Comments(props) {
             },
             body: JSON.stringify({ commentData: commentData }),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                return response.json().then((data) => {
+                    throw new Error(data.message || "something went wrong!");
+                });
+            })
             .then((data) => {
-                console.log(data);
+                notificationCtx.showNotification({
+                    title: "Posted",
+                    message: "Comment posted successfully",
+                    status: "success",
+                });
+            })
+            .catch((error) => {
+                notificationCtx.showNotification({
+                    title: "Error!",
+                    message: error.message,
+                    status: "error",
+                });
             });
     }
 

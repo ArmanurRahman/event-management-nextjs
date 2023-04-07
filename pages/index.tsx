@@ -1,6 +1,7 @@
 import EventList from "@/components/events/event-list";
 import NewsletterRegistration from "@/components/input/newsletter-registration";
 import { getAllEvents, getFeaturedEvents } from "@/helpers/api-util";
+import NotificationContext from "@/store/notification-context";
 import Head from "next/head";
 
 export default function Home(props) {
